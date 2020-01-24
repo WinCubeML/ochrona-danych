@@ -16,6 +16,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean existsByLogin(String login) {
+        return userRepository.existsById(login);
+    }
+
+    @Override
     public User getUserByLogin(String login) {
         return userRepository.findById(login).orElse(null);
     }

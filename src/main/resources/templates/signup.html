@@ -8,6 +8,13 @@
 </head>
 
 <body>
+<div th:if="${not #lists.isEmpty(errors)}">
+    <h1>Proszę poprawić następujące błędy:</h1>
+    <ul th:each="error : ${errors}">
+        <li th:text="${error}"></li>
+    </ul>
+</div>
+
 <!--/*@thymesVar id="user" type="pl.pw.ocd.app.model.UserDTO"*/-->
 <form class="form" id="form" method="POST" enctype="multipart/form-data" th:action="@{/signup}" th:object="${user}">
     <div class="formInputText center">
@@ -20,7 +27,7 @@
 
     <div class="formInputText center">
         <label for="pass1">Hasło:<br></label>
-        <input type="password" placeholder="Wprowadź hasło" id="pass1" th:field="*{password}">
+        <input type="password" placeholder="Wprowadź hasło" id="pass1" th:field="*{password1}">
         <p id="passEntropy">Entropia = </p>
     </div>
     <div id="showPassword1" class="validationShow center">
@@ -29,7 +36,7 @@
 
     <div class="formInputText center">
         <label for="pass2">Powtórz hasło:<br></label>
-        <input type="password" placeholder="Powtórz hasło" name="password" id="pass2">
+        <input type="password" placeholder="Powtórz hasło" id="pass2" th:field="*{password2}">
     </div>
     <div id="showPassword2" class="validationShow center">
         <p class="validator" id="validationPassword2"></p>

@@ -7,6 +7,8 @@ import pl.pw.ocd.app.model.User;
 public interface UserService {
     void createUser(User user);
 
+    boolean existsByLogin(String login);
+
     User getUserByLogin(String login);
 
     Iterable<User> getAllUsers();
