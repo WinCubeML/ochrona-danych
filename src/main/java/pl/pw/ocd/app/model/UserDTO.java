@@ -3,15 +3,11 @@ package pl.pw.ocd.app.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
 
-@RedisHash("user")
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
-    @Id
+public class UserDTO {
     private String login;
 
     private String password;
