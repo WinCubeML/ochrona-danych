@@ -47,7 +47,7 @@ public class LoginController {
             SessionData checkSession = loginService.getSessionById(session.getValue());
             if (null != checkSession && checkSession.getLogin().equals(user.getValue())) {
                 System.out.println("Ciasteczko znalezione w Redis");
-                return new ModelAndView("redirect:/"); //TODO do zmiany jak będzie już moduł notatek
+                return new ModelAndView("redirect:/notes");
             } else {
                 System.out.println("Ciasteczka nie znaleziono w Redis lub login nie pokrywa się z danymi sesji");
                 if (null != checkSession)
@@ -97,7 +97,32 @@ public class LoginController {
         loginService.createSession(sessionDataDTO);
 
         System.out.println("Zalogowano");
-        return new ModelAndView("redirect:/"); //TODO do zmiany jak będzie moduł notatek
+        return new ModelAndView("redirect:/notes");
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
+        loginService.checkExpiredSessions();
+        try {
+            Cookie[] cookies = request.getCookies();
+            Cookie session = Arrays.stream(cookies).filter(cookie -> cookie.getName().equals("sessionid")).findAny().orElse(null);
+            Cookie user = Arrays.stream(cookies).filter(cookie -> cookie.getName().equals("user")).findAny().orElse(null);
+            if (null == session || null == user) {
+                throw new IllegalStateException();
+            }
+
+            SessionData checkSession = loginService.getSessionById(session.getValue());
+            if (null != checkSession)
+                loginService.destroySession(checkSession);
+            session.setMaxAge(0);
+            user.setMaxAge(0);
+            response.addCookie(session);
+            response.addCookie(user);
+
+        } catch (IllegalStateException | NullPointerException e) {
+            return new ModelAndView("redirect:/");
+        }
+        return new ModelAndView("redirect:/");
     }
 
     private boolean validateUser(LoginDTO loginDTO) {

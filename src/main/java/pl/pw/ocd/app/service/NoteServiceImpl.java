@@ -1,5 +1,6 @@
 package pl.pw.ocd.app.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.pw.ocd.app.model.Note;
 import pl.pw.ocd.app.repositories.NoteRepository;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class NoteServiceImpl implements NoteService {
 
+    @Autowired
     private NoteRepository noteRepository;
 
     @Override
@@ -25,8 +27,19 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    public List<Note> getByOwner(String owner) {
+        List<Note> notes = getAllNotes();
+        if (null == notes || notes.isEmpty())
+            return null;
+        notes = notes.stream().filter(note -> note.getOwner().equals(owner)).collect(Collectors.toList());
+        return notes;
+    }
+
+    @Override
     public List<Note> getPermittedNotes(String login) {
         List<Note> notes = getAllNotes();
+        if (null == notes || notes.isEmpty())
+            return null;
         notes = notes.stream().filter(note -> note.getPermitted().contains(login)).collect(Collectors.toList());
         return notes;
     }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Notatki</title>
+    <link th:href="@{/css/notes.css}" rel="stylesheet" href="../static/css/notes.css">
+</head>
+
+<body>
+<h1>Notatki</h1>
+<a href="/logout">Wyloguj się</a><br>
+<br>
+------------------------------------------<br>
+<!--<form class="form" id="form" method="POST" enctype="multipart/form-data" th:action="@{/files/upload}">-->
+<!--    <div class="file">-->
+<!--        <label for="file">Załącz plik:<br></label>-->
+<!--        <input type="file" id="file" name="file">-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <button type="submit" id="upload" class="btn">Udostępnij plik</button>-->
+<!--    </div>-->
+<!--</form>-->
+------------------------------------------<br>
+<h1>Twoje notatki</h1>
+<div class="container">
+    <table>
+        <tr>
+            <td><b>Notatka</b></td>
+            <td><b>Właściciel</b></td>
+            <td><b>Modyfikacja</b></td>
+            <td><b>Usuwanie</b></td>
+        </tr>
+        <!--        <th:block th:each="file : ${files}">-->
+        <!--            <tr>-->
+        <!--                <td th:text="${file.getFileName()}"></td>-->
+        <!--                <td th:text="${file.getAuthorName() + ' ' + file.getAuthorSurname()}"></td>-->
+        <!--                <td><a th:href="@{'/files/download/'+${file.getFileName()}}">Pobierz</a></td>-->
+        <!--                <td>-->
+        <!--                    <form action="#" th:action="@{'/files/delete/'+${file.getFileName()}}" th:method="delete">-->
+        <!--                        <input type="hidden" name="_method" value="delete"/>-->
+        <!--                        <button type="submit" id="submitButton">Usuń</button>-->
+        <!--                    </form>-->
+        <!--                </td>-->
+        <!--            </tr>-->
+        <!--        </th:block>-->
+    </table>
+</div>
+------------------------------------------<br>
+<h1>Dostępne notatki</h1>
+<div class="container">
+    <table>
+        <tr>
+            <td><b>Notatka</b></td>
+            <td><b>Właściciel</b></td>
+        </tr>
+        <!--        <th:block th:each="file : ${files}">-->
+        <!--            <tr>-->
+        <!--                <td th:text="${file.getFileName()}"></td>-->
+        <!--                <td th:text="${file.getAuthorName() + ' ' + file.getAuthorSurname()}"></td>-->
+        <!--                <td><a th:href="@{'/files/download/'+${file.getFileName()}}">Pobierz</a></td>-->
+        <!--                <td>-->
+        <!--                    <form action="#" th:action="@{'/files/delete/'+${file.getFileName()}}" th:method="delete">-->
+        <!--                        <input type="hidden" name="_method" value="delete"/>-->
+        <!--                        <button type="submit" id="submitButton">Usuń</button>-->
+        <!--                    </form>-->
+        <!--                </td>-->
+        <!--            </tr>-->
+        <!--        </th:block>-->
+    </table>
+</div>
+</body>
+</html>

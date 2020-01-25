@@ -16,6 +16,8 @@ public class Note {
 
     private String noteText;
 
+    private String owner;
+
     private boolean isPublic;
 
     private boolean isPrivate;

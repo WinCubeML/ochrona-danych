@@ -11,6 +11,8 @@ public interface NoteService {
 
     Note getNote(String noteId);
 
+    List<Note> getByOwner(String owner);
+
     List<Note> getPermittedNotes(String login);
 
     List<Note> getAllNotes();
