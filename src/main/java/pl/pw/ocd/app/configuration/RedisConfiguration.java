@@ -13,8 +13,11 @@ public class RedisConfiguration {
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisConf = new RedisStandaloneConfiguration();
-//        redisConf.setHostName("localhost"); // do działania lokalnie
-        redisConf.setHostName("redis"); // do działania na dockerze
+
+        String redisUrl = System.getenv("redisConfig");
+        if (null == redisUrl)
+            redisUrl = "localhost";
+        redisConf.setHostName(redisUrl);
 
         return new LettuceConnectionFactory(redisConf);
     }

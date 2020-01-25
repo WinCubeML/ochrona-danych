@@ -4,6 +4,8 @@ services:
     build: ./
     depends_on:
       - redis
+    environment:
+      - redisConfig=redis
 
   redis:
     image: redis
