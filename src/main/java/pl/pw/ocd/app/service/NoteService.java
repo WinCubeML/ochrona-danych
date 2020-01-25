@@ -15,9 +15,17 @@ public interface NoteService {
 
     List<Note> getAllNotes();
 
-    Note modifyNote(Note oldNote, Note newNote);
+    void modifyNote(Note oldNote, Note newNote);
 
-    Note modifyPermitted(Note note, String logins);
+    void setNotePrivate(String noteId);
+
+    void setNotePublic(String noteId);
+
+    void modifyPermitted(String noteId, String logins);
 
     void deleteNote(String noteId);
+
+    void deleteNote(Note note);
+
+    void deleteAllNotes();
 }
