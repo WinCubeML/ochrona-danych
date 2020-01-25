@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import pl.pw.ocd.app.logic.PasswordEncoder;
 import pl.pw.ocd.app.logic.UserSignUpValidation;
+import pl.pw.ocd.app.model.User;
 import pl.pw.ocd.app.model.UserDTO;
 import pl.pw.ocd.app.service.UserService;
 
@@ -22,6 +24,9 @@ public class UserController {
 
     @Autowired
     UserSignUpValidation userSignUpValidation;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public ModelAndView signUpUserPage() {
@@ -69,7 +74,13 @@ public class UserController {
 
         if (valid) {
             ModelAndView modelAndView = new ModelAndView("redirect:/");
-            // TODO stworzyć haszowanie hasła, zeby potem zapisać użytkownika w bazie
+            User user = new User();
+            user.setLogin(userDTO.getLogin());
+            user.setEmail(userDTO.getEmail());
+            user.setName(userDTO.getName());
+            user.setSurname(userDTO.getSurname());
+            user.setPassword(passwordEncoder.hashPassword(userDTO.getPassword1()));
+            userService.createUser(user);
             modelAndView.setStatus(HttpStatus.CREATED);
             return modelAndView;
         } else {
