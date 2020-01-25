@@ -5,6 +5,10 @@
     <title>Logowanie</title>
 </head>
 <body>
+<div th:if="${error!=''}">
+    <h1>Podany login lub hasło jest nieprawidłowe</h1>
+</div>
+
 <h1>Logowanie</h1>
 <!--/*@thymesVar id="loginDTO" type="pl.pw.ocd.app.model.LoginDTO"*/-->
 <form class="form" id="form" method="post" enctype="multipart/form-data" th:action="@{/login}"

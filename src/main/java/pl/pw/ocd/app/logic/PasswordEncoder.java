@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class PasswordEncoder {
     public String hashPassword(String password) {
         String hash = password;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             hash = hashLoop(hash);
         }
         return hash;

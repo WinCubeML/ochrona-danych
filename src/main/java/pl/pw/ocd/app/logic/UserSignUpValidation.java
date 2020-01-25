@@ -14,7 +14,7 @@ public class UserSignUpValidation {
     UserService userService;
 
     private int validateLogin(String login) {
-        String regex = "^[a-zA-Z0-9]{3,}$";
+        String regex = "^[a-zA-Z0-9]+$";
         if (login.matches(regex)) {
             if (!userService.existsByLogin(login))
                 return 0;
