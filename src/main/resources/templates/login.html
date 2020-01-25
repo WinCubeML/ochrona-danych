@@ -15,6 +15,10 @@
       th:object="${loginDTO}">
     <input type="text" placeholder="Wprowadź login" name="login" id="login" th:field="*{login}">
     <input type="password" placeholder="Wprowadź hasło" name="password" id="password" th:field="*{password}"><br>
+    <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"/>
     <button type="submit" id="submit">Zaloguj</button>
 </form>
 </body>
