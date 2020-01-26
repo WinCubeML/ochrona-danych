@@ -7,7 +7,7 @@
     <link th:href="@{/css/signup.css}" rel="stylesheet" href="../static/css/signup.css">
 </head>
 <body>
-<!--/*@thymesVar id="bibliography" type="pl.pw.ocd.app.model.Note"*/-->
+<!--/*@thymesVar id="bibliography" type="pl.pw.ocd.app.model.NoteDTO"*/-->
 <form class="form" id="form" method="POST" enctype="multipart/form-data" th:action="@{/notes/create}"
       th:object="${note}">
     <div class="formInputText center">
@@ -26,21 +26,11 @@
         <label for="shared">Udostępniona poniższym osobom:</label>
         <input type="radio" id="shared" value="shared" name="permission">
     </div>
-<!--    TODO Okno dodawania notatki-->
-    <!--    <div class="formInputText center">-->
-    <!--        <label for="pubAuthor">Autor:<br></label>-->
-    <!--        <input type="text" placeholder="Autor" name="pubAuthor" id="pubAuthor" th:field="*{publicationAuthor}">-->
-    <!--    </div>-->
-    <!--    <div class="formInputText center">-->
-    <!--        <label for="pubPageCount">Liczba stron:<br></label>-->
-    <!--        <input type="text" placeholder="Liczba stron" name="pubPageCount" id="pubPageCount"-->
-    <!--               th:field="*{publicationPageCount}">-->
-    <!--    </div>-->
-    <!--    <div class="formInputText center">-->
-    <!--        <label for="pubYear">Rok wydania:<br></label>-->
-    <!--        <input type="text" placeholder="Rok wydania" name="pubYear" id="pubYear" th:field="*{publicationYear}">-->
-    <!--    </div>-->
-    <!--    <br>-->
+    <div class="formInputText center">
+        <label for="sharedwith">Podaj loginy osób oddzielone spacjami:<br></label>
+        <textarea rows="3" cols="100" placeholder="Komu udostępnić?" name="sharedwith" id="sharedwith"
+                  th:field="*{sharedLogins}"></textarea>
+    </div>
     <div class="center">
         <button type="submit" id="submitForm" class="btn">Zapisz notatkę</button>
     </div>

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.pw.ocd.app.exceptions.ExpiredSessionException;
 import pl.pw.ocd.app.exceptions.ForbiddenCookieException;
 import pl.pw.ocd.app.model.Note;
+import pl.pw.ocd.app.model.NoteDTO;
 import pl.pw.ocd.app.model.SessionData;
 import pl.pw.ocd.app.service.LoginService;
 import pl.pw.ocd.app.service.NoteService;
@@ -88,7 +89,7 @@ public class NoteController {
         ResponseEntity responseEntity = checkCookies(request, response);
         if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             ModelAndView modelAndView = new ModelAndView("createnote");
-            modelAndView.addObject("note", new Note());
+            modelAndView.addObject("note", new NoteDTO());
             return modelAndView;
         } else {
             return new ModelAndView("unauthorized");
