@@ -18,13 +18,13 @@
         <label>Dostępnosć:<br></label>
 
         <label for="private">Prywatna</label>
-        <input type="radio" id="private" value="private" name="permission">
+        <input type="radio" id="private" value="private" name="permission" checked onclick="toggleShared()">
         <br>
         <label for="public">Publiczna</label>
-        <input type="radio" id="public" value="public" name="permission">
+        <input type="radio" id="public" value="public" name="permission" onclick="toggleShared()">
         <br>
         <label for="shared">Udostępniona poniższym osobom:</label>
-        <input type="radio" id="shared" value="shared" name="permission">
+        <input type="radio" id="shared" value="shared" name="permission" onclick="toggleShared()">
     </div>
     <div class="formInputText center">
         <label for="sharedwith">Podaj loginy osób oddzielone spacjami:<br></label>
@@ -35,5 +35,6 @@
         <button type="submit" id="submitForm" class="btn">Zapisz notatkę</button>
     </div>
 </form>
+<script th:src="@{/js/createNoteUX.js}"></script>
 </body>
 </html>

@@ -15,11 +15,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 //                .authorizeRequests()
 //                .antMatchers(HttpMethod.OPTIONS, "*/").permitAll()
 //                .antMatchers(HttpMethod.GET, "/login").permitAll();
-        http
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
+//        http
+//                .authorizeRequests()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .httpBasic();
+        http.authorizeRequests().antMatchers("/").permitAll();
     }
 }
