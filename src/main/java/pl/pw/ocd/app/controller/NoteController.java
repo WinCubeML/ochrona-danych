@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -138,6 +139,17 @@ public class NoteController {
             noteService.createNote(note);
             ModelAndView modelAndView = new ModelAndView("redirect:/notes");
             return modelAndView;
+        } else {
+            return new ModelAndView("unauthorized");
+        }
+    }
+
+    @RequestMapping(value = "/notes/{noteId}/delete", method = RequestMethod.POST)
+    public ModelAndView deleteNote(@PathVariable String noteId, HttpServletRequest request, HttpServletResponse response) {
+        ResponseEntity responseEntity = checkCookies(request, response);
+        if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+            noteService.deleteNote(noteId);
+            return new ModelAndView("redirect:/notes");
         } else {
             return new ModelAndView("unauthorized");
         }
