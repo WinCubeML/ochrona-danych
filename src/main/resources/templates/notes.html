@@ -23,7 +23,6 @@
         <tr>
             <td><b>Notatka</b></td>
             <td><b>Właściciel</b></td>
-            <td><b>Modyfikacja</b></td>
             <td><b>Usuwanie</b></td>
         </tr>
         <th:block th:each="note : ${myNotes}">
@@ -31,16 +30,11 @@
                 <td th:text="${note.getNoteText()}"></td>
                 <td th:text="${note.getOwner()}"></td>
                 <td>
-                    TODO
-                    <!--                            TODO opcja modyfikacji notatki-->
-                </td>
-                <td>
                     <form action="#" th:action="@{'/notes/'+${note.getNoteId()}+'/delete'}" th:method="delete">
                         <input type="hidden" name="_method" value="delete"/>
-                        <button type="submit" id="submitButton">Usuń</button>
+                        <button type="submit" id="deleteButton">Usuń</button>
                     </form>
                 </td>
-                <!--                <td><a th:href="@{'/files/download/'+${file.getFileName()}}">Pobierz</a></td>-->
             </tr>
         </th:block>
     </table>
