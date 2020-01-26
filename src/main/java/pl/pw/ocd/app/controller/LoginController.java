@@ -69,7 +69,7 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView login(@ModelAttribute LoginDTO loginDTO, HttpServletResponse response, HttpServletRequest request) {
         loginService.checkExpiredSessions();
-        if (loginDTO.getLogin().matches("^[a-zA-Z0-9]+$") && userService.existsByLogin(loginDTO.getLogin()) && !validateUser(loginDTO)) {
+        if (!loginDTO.getLogin().matches("^[a-zA-Z0-9]+$") || !userService.existsByLogin(loginDTO.getLogin()) || !validateUser(loginDTO)) {
             ModelAndView modelAndView = new ModelAndView("login");
             modelAndView.addObject("loginDTO", new LoginDTO());
             modelAndView.addObject("error", "y");
@@ -80,6 +80,7 @@ public class LoginController {
         Cookie userCookie = new Cookie("user", loginDTO.getLogin());
         userCookie.setMaxAge(cookieMaxAge);
         userCookie.setHttpOnly(true);
+        userCookie.setSecure(true);
         userCookie.setPath("/");
         response.addCookie(userCookie);
 
@@ -87,6 +88,7 @@ public class LoginController {
         Cookie sessionCookie = new Cookie("sessionid", sessionId);
         sessionCookie.setMaxAge(cookieMaxAge);
         sessionCookie.setHttpOnly(true);
+        sessionCookie.setSecure(true);
         sessionCookie.setPath("/");
         response.addCookie(sessionCookie);
 
