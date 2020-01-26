@@ -73,7 +73,10 @@ public class NoteController {
             ModelAndView modelAndView = new ModelAndView("notes");
             List<Note> myNotes = noteService.getByOwner(user.getValue());
             if (null != myNotes && !myNotes.isEmpty())
-                modelAndView.addObject("myNotes", noteService.getByOwner(user.getValue()));
+                modelAndView.addObject("myNotes", myNotes);
+            List<Note> otherNotes = noteService.getPermittedNotes(user.getValue());
+            if (null != otherNotes && !otherNotes.isEmpty())
+                modelAndView.addObject("otherNotes", otherNotes);
             return modelAndView;
         } else {
             return new ModelAndView("unauthorized");
@@ -81,15 +84,25 @@ public class NoteController {
     }
 
     @RequestMapping(value = "/notes/create", method = RequestMethod.GET)
-    public ModelAndView getCreateNotePage() {
-        ModelAndView modelAndView = new ModelAndView("createnote");
-        modelAndView.addObject("note", new Note());
-        return modelAndView;
+    public ModelAndView getCreateNotePage(HttpServletRequest request, HttpServletResponse response) {
+        ResponseEntity responseEntity = checkCookies(request, response);
+        if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+            ModelAndView modelAndView = new ModelAndView("createnote");
+            modelAndView.addObject("note", new Note());
+            return modelAndView;
+        } else {
+            return new ModelAndView("unauthorized");
+        }
     }
 
     @RequestMapping(value = "/notes/create", method = RequestMethod.POST)
-    public ModelAndView createNote(@ModelAttribute Note note) {
-        ModelAndView modelAndView = new ModelAndView("redirect:/notes"); //TODO dodawanie notatek
-        return modelAndView;
+    public ModelAndView createNote(@ModelAttribute Note note, HttpServletRequest request, HttpServletResponse response) {
+        ResponseEntity responseEntity = checkCookies(request, response);
+        if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+            ModelAndView modelAndView = new ModelAndView("redirect:/notes"); //TODO dodawanie notatek
+            return modelAndView;
+        } else {
+            return new ModelAndView("unauthorized");
+        }
     }
 }

@@ -11,15 +11,11 @@
 <a href="/logout">Wyloguj się</a><br>
 <br>
 ------------------------------------------<br>
-<!--<form class="form" id="form" method="POST" enctype="multipart/form-data" th:action="@{/files/upload}">-->
-<!--    <div class="file">-->
-<!--        <label for="file">Załącz plik:<br></label>-->
-<!--        <input type="file" id="file" name="file">-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <button type="submit" id="upload" class="btn">Udostępnij plik</button>-->
-<!--    </div>-->
-<!--</form>-->
+<div>
+    <form class="#" method="get" th:action="@{/notes/create}">
+        <button type="submit" id="createNote" class="btn">Utwórz notatkę</button>
+    </form>
+</div>
 ------------------------------------------<br>
 <h1>Twoje notatki</h1>
 <div class="container">
@@ -30,19 +26,27 @@
             <td><b>Modyfikacja</b></td>
             <td><b>Usuwanie</b></td>
         </tr>
-        <!--        <th:block th:each="file : ${files}">-->
-        <!--            <tr>-->
-        <!--                <td th:text="${file.getFileName()}"></td>-->
-        <!--                <td th:text="${file.getAuthorName() + ' ' + file.getAuthorSurname()}"></td>-->
-        <!--                <td><a th:href="@{'/files/download/'+${file.getFileName()}}">Pobierz</a></td>-->
-        <!--                <td>-->
-        <!--                    <form action="#" th:action="@{'/files/delete/'+${file.getFileName()}}" th:method="delete">-->
-        <!--                        <input type="hidden" name="_method" value="delete"/>-->
-        <!--                        <button type="submit" id="submitButton">Usuń</button>-->
-        <!--                    </form>-->
-        <!--                </td>-->
-        <!--            </tr>-->
-        <!--        </th:block>-->
+        <th:block th:each="note : ${myNotes}">
+            <tr>
+                <td th:text="${note.getNoteText()}"></td>
+                <td th:text="${note.getOwner()}"></td>
+                <td>
+                    TODO
+                    <!--                            TODO opcja modyfikacji notatki-->
+                </td>
+                <td>
+                    TODO
+                    <!--                            TODO opcja usuwania notatki-->
+                </td>
+                <!--                <td><a th:href="@{'/files/download/'+${file.getFileName()}}">Pobierz</a></td>-->
+                <!--                <td>-->
+                <!--                    <form action="#" th:action="@{'/files/delete/'+${file.getFileName()}}" th:method="delete">-->
+                <!--                        <input type="hidden" name="_method" value="delete"/>-->
+                <!--                        <button type="submit" id="submitButton">Usuń</button>-->
+                <!--                    </form>-->
+                <!--                </td>-->
+            </tr>
+        </th:block>
     </table>
 </div>
 ------------------------------------------<br>
@@ -53,19 +57,12 @@
             <td><b>Notatka</b></td>
             <td><b>Właściciel</b></td>
         </tr>
-        <!--        <th:block th:each="file : ${files}">-->
-        <!--            <tr>-->
-        <!--                <td th:text="${file.getFileName()}"></td>-->
-        <!--                <td th:text="${file.getAuthorName() + ' ' + file.getAuthorSurname()}"></td>-->
-        <!--                <td><a th:href="@{'/files/download/'+${file.getFileName()}}">Pobierz</a></td>-->
-        <!--                <td>-->
-        <!--                    <form action="#" th:action="@{'/files/delete/'+${file.getFileName()}}" th:method="delete">-->
-        <!--                        <input type="hidden" name="_method" value="delete"/>-->
-        <!--                        <button type="submit" id="submitButton">Usuń</button>-->
-        <!--                    </form>-->
-        <!--                </td>-->
-        <!--            </tr>-->
-        <!--        </th:block>-->
+        <th:block th:each="note : ${otherNotes}">
+            <tr>
+                <td th:text="${note.getNoteText()}"></td>
+                <td th:text="${note.getOwner()}"></td>
+            </tr>
+        </th:block>
     </table>
 </div>
 </body>
