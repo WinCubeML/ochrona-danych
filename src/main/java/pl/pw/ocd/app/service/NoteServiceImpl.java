@@ -31,7 +31,7 @@ public class NoteServiceImpl implements NoteService {
         List<Note> notes = getAllNotes();
         if (null == notes || notes.isEmpty())
             return null;
-        notes = notes.stream().filter(note -> note.getOwner().equals(owner)).collect(Collectors.toList());
+        notes = notes.stream().filter(note -> null != note.getOwnerLogin() && note.getOwnerLogin().equals(owner)).collect(Collectors.toList());
         return notes;
     }
 
@@ -40,7 +40,9 @@ public class NoteServiceImpl implements NoteService {
         List<Note> notes = getAllNotes();
         if (null == notes || notes.isEmpty())
             return null;
-        notes = notes.stream().filter(note -> note.getPermitted().contains(login)).collect(Collectors.toList());
+        notes = notes.stream().filter(note -> (null != note.getPermitted() && note.getPermitted().contains(login)) ||
+                (note.isPublic() && null != note.getOwnerLogin() && !note.getOwnerLogin().equals(login)))
+                .collect(Collectors.toList());
         return notes;
     }
 

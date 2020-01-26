@@ -13,6 +13,7 @@ import pl.pw.ocd.app.exceptions.ForbiddenCookieException;
 import pl.pw.ocd.app.model.Note;
 import pl.pw.ocd.app.model.NoteDTO;
 import pl.pw.ocd.app.model.SessionData;
+import pl.pw.ocd.app.model.User;
 import pl.pw.ocd.app.service.LoginService;
 import pl.pw.ocd.app.service.NoteService;
 import pl.pw.ocd.app.service.UserService;
@@ -20,6 +21,7 @@ import pl.pw.ocd.app.service.UserService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -97,13 +99,58 @@ public class NoteController {
     }
 
     @RequestMapping(value = "/notes/create", method = RequestMethod.POST)
-    public ModelAndView createNote(@ModelAttribute Note note, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView createNote(@ModelAttribute NoteDTO noteDTO, HttpServletRequest request, HttpServletResponse response) {
         ResponseEntity responseEntity = checkCookies(request, response);
         if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-            ModelAndView modelAndView = new ModelAndView("redirect:/notes"); //TODO dodawanie notatek
+            Cookie[] cookies = request.getCookies();
+            Cookie user = Arrays.stream(cookies).filter(cookie -> cookie.getName().equals("user")).findAny().orElse(null);
+            User logged = userService.getUserByLogin(user.getValue());
+
+            Note note = new Note();
+            note.setNoteText(noteDTO.getNoteText());
+            note.setOwner(logged.getName() + " " + logged.getSurname());
+            note.setOwnerLogin(logged.getLogin());
+            switch (noteDTO.getType()) {
+                case 0:
+                    note.setPublic(false);
+                    note.setPrivate(true);
+                    note.setPermitted(new ArrayList<>());
+                    break;
+
+                case 1:
+                    note.setPublic(true);
+                    note.setPrivate(false);
+                    note.setPermitted(new ArrayList<>());
+                    break;
+
+                case 2:
+                    note.setPublic(false);
+                    note.setPrivate(false);
+                    List<String> permitted = getSharedLogins(noteDTO.getSharedLogins());
+                    if (!permitted.isEmpty())
+                        note.setPermitted(getSharedLogins(noteDTO.getSharedLogins()));
+                    else {
+                        note.setPermitted(new ArrayList<>());
+                        note.setPrivate(true);
+                    }
+                    break;
+            }
+            noteService.createNote(note);
+            ModelAndView modelAndView = new ModelAndView("redirect:/notes");
             return modelAndView;
         } else {
             return new ModelAndView("unauthorized");
         }
+    }
+
+    private List<String> getSharedLogins(String data) {
+        List<String> result = new ArrayList<>();
+        String[] listData = data.split(" ");
+        for (String s : listData) {
+            if (s.matches("^[a-zA-Z0-9]+$") && userService.existsByLogin(s)) {
+                result.add(s);
+            }
+        }
+        return result;
     }
 }

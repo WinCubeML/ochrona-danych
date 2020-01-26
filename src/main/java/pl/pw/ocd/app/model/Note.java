@@ -18,6 +18,8 @@ public class Note {
 
     private String owner;
 
+    private String ownerLogin;
+
     private boolean isPublic;
 
     private boolean isPrivate;

@@ -18,13 +18,14 @@
         <label>Dostępnosć:<br></label>
 
         <label for="private">Prywatna</label>
-        <input type="radio" id="private" value="private" name="permission" checked onclick="toggleShared()">
+        <input type="radio" id="private" value="0" name="permission" th:field="*{type}" checked
+               onclick="toggleShared()">
         <br>
         <label for="public">Publiczna</label>
-        <input type="radio" id="public" value="public" name="permission" onclick="toggleShared()">
+        <input type="radio" id="public" value="1" name="permission" th:field="*{type}" onclick="toggleShared()">
         <br>
         <label for="shared">Udostępniona poniższym osobom:</label>
-        <input type="radio" id="shared" value="shared" name="permission" onclick="toggleShared()">
+        <input type="radio" id="shared" value="2" name="permission" th:field="*{type}" onclick="toggleShared()">
     </div>
     <div class="formInputText center">
         <label for="sharedwith">Podaj loginy osób oddzielone spacjami:<br></label>
