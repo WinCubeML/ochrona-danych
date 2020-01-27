@@ -71,6 +71,8 @@ public class LoginController {
         loginService.checkExpiredSessions();
         Thread.sleep(5000);
         if (!loginDTO.getLogin().matches("^[a-zA-Z0-9]+$") || !userService.existsByLogin(loginDTO.getLogin()) || !validateUser(loginDTO)) {
+            if (userService.existsByLogin(loginDTO.getLogin()))
+                userService.incrementBadLogin(loginDTO.getLogin());
             ModelAndView modelAndView = new ModelAndView("login");
             modelAndView.addObject("loginDTO", new LoginDTO());
             modelAndView.addObject("error", "y");

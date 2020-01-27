@@ -74,6 +74,8 @@ public class NoteController {
         if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             Cookie[] cookies = request.getCookies();
             Cookie user = Arrays.stream(cookies).filter(cookie -> cookie.getName().equals("user")).findAny().orElse(null);
+            User data = userService.getUserByLogin(user.getValue());
+
             ModelAndView modelAndView = new ModelAndView("notes");
             List<Note> myNotes = noteService.getByOwner(user.getValue());
             if (null != myNotes && !myNotes.isEmpty())
@@ -81,6 +83,8 @@ public class NoteController {
             List<Note> otherNotes = noteService.getPermittedNotes(user.getValue());
             if (null != otherNotes && !otherNotes.isEmpty())
                 modelAndView.addObject("otherNotes", otherNotes);
+
+            modelAndView.addObject("badlogins", data.getBadLogins());
             return modelAndView;
         } else {
             return new ModelAndView("unauthorized");

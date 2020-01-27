@@ -21,4 +21,6 @@ public class User {
     private String name;
 
     private String surname;
+
+    private int badLogins = 0;
 }

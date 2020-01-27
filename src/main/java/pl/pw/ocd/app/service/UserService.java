@@ -13,6 +13,8 @@ public interface UserService {
 
     Iterable<User> getAllUsers();
 
+    void incrementBadLogin(String login);
+
     void changePassword(String login, String password);
 
     void deleteUserByLogin(String login);
