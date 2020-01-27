@@ -67,8 +67,9 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(@ModelAttribute LoginDTO loginDTO, HttpServletResponse response, HttpServletRequest request) {
+    public ModelAndView login(@ModelAttribute LoginDTO loginDTO, HttpServletResponse response, HttpServletRequest request) throws InterruptedException {
         loginService.checkExpiredSessions();
+        Thread.sleep(5000);
         if (!loginDTO.getLogin().matches("^[a-zA-Z0-9]+$") || !userService.existsByLogin(loginDTO.getLogin()) || !validateUser(loginDTO)) {
             ModelAndView modelAndView = new ModelAndView("login");
             modelAndView.addObject("loginDTO", new LoginDTO());
