@@ -31,6 +31,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void changePassword(String login, String password) {
+        User user = getUserByLogin(login);
+        deleteUserByLogin(login);
+        user.setPassword(password);
+        createUser(user);
+    }
+
+    @Override
     public void deleteUserByLogin(String login) {
         User userToDelete = getUserByLogin(login);
         if (null != userToDelete) {
