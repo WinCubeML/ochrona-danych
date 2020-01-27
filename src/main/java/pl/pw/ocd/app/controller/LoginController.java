@@ -78,6 +78,17 @@ public class LoginController {
             modelAndView.addObject("error", "y");
             return modelAndView;
         }
+        String ip = "";
+
+        if (request != null) {
+            ip = request.getHeader("X-FORWARDED-FOR");
+            if (ip == null || "".equals(ip)) {
+                ip = request.getRemoteAddr();
+            }
+        }
+
+        userService.attachIpAdress(loginDTO.getLogin(), ip);
+
         int cookieMaxAge = 5 * 60;
 
         Cookie userCookie = new Cookie("user", loginDTO.getLogin());

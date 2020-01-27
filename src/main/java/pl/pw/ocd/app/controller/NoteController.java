@@ -85,6 +85,8 @@ public class NoteController {
                 modelAndView.addObject("otherNotes", otherNotes);
 
             modelAndView.addObject("badlogins", data.getBadLogins());
+            modelAndView.addObject("attachedip", data.getAdresses());
+
             return modelAndView;
         } else {
             return new ModelAndView("unauthorized");

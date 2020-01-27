@@ -128,8 +128,9 @@ public class UserController {
 
             boolean goodOld = validateUser(user.getValue(), passwordDTO.getOld());
             boolean goodNew = passwordDTO.getNewpass().equals(passwordDTO.getRepeatpass());
+            boolean theseAreTheSame = passwordDTO.getOld().equals(passwordDTO.getNewpass()) && goodNew;
 
-            if (goodOld && goodNew) {
+            if (goodOld && goodNew && !theseAreTheSame) {
                 userService.changePassword(user.getValue(), passwordEncoder.hashPassword(passwordDTO.getNewpass()));
                 return new ModelAndView("redirect:/notes");
             } else {
@@ -139,6 +140,9 @@ public class UserController {
                 }
                 if (!goodNew) {
                     errors.add("Nowe hasła nie są tożsame.");
+                }
+                if (theseAreTheSame) {
+                    errors.add("Nie możesz zmienić hasła na takie, jakie było teraz.");
                 }
                 ModelAndView modelAndView = new ModelAndView("changepassword");
                 modelAndView.addObject("pass", new ChangePasswordDTO());

@@ -15,6 +15,8 @@ public interface UserService {
 
     void incrementBadLogin(String login);
 
+    void attachIpAdress(String login, String ipAdress);
+
     void changePassword(String login, String password);
 
     void deleteUserByLogin(String login);

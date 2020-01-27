@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.pw.ocd.app.model.User;
 import pl.pw.ocd.app.repositories.UserRepository;
 
+import java.util.ArrayList;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -39,10 +41,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void attachIpAdress(String login, String ipAdress) {
+        User user = getUserByLogin(login);
+        deleteUserByLogin(login);
+        if (null == user.getAdresses())
+            user.setAdresses(new ArrayList<>());
+        if (user.getAdresses().isEmpty() || !user.getAdresses().contains(ipAdress)) {
+            user.getAdresses().add(ipAdress);
+        }
+        createUser(user);
+    }
+
+    @Override
     public void changePassword(String login, String password) {
         User user = getUserByLogin(login);
         deleteUserByLogin(login);
         user.setPassword(password);
+        user.setAdresses(new ArrayList<>());
+        user.setBadLogins(0);
         createUser(user);
     }
 

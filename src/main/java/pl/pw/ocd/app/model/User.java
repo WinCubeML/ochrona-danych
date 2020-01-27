@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.util.List;
+
 @RedisHash("user")
 @Getter
 @Setter
@@ -23,4 +25,6 @@ public class User {
     private String surname;
 
     private int badLogins = 0;
+
+    private List<String> adresses;
 }

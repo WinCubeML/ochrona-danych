@@ -8,7 +8,13 @@
 
 <body>
 <h1>Notatki</h1>
-Niepoprawnych logowań: <span th:text="${badlogins}"></span><br>
+Niepoprawnych logowań (od utworzenia lub zmiany hasła): <span th:text="${badlogins}"></span><br>
+<div class="container" th:if="${not #lists.isEmpty(attachedip)}">
+    Adresy, z których udało się zalogować (od utworzenia lub zmiany hasła):<br>
+    <ul th:each="ip : ${attachedip}">
+        <li th:text="${ip}"></li>
+    </ul>
+</div>
 <a href="/changepass">Zmień hasło</a><br>
 <a href="/logout">Wyloguj się</a><br>
 <br>
