@@ -127,7 +127,7 @@ public class UserController {
             Cookie user = Arrays.stream(cookies).filter(cookie -> cookie.getName().equals("user")).findAny().orElse(null);
 
             boolean goodOld = validateUser(user.getValue(), passwordDTO.getOld());
-            boolean goodNew = passwordDTO.getNewpass().equals(passwordDTO.getRepeatpass());
+            boolean goodNew = !passwordDTO.getNewpass().equals("") && passwordDTO.getNewpass().equals(passwordDTO.getRepeatpass());
             boolean theseAreTheSame = passwordDTO.getOld().equals(passwordDTO.getNewpass()) && goodNew;
 
             if (goodOld && goodNew && !theseAreTheSame) {
