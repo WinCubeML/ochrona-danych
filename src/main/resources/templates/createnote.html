@@ -29,8 +29,7 @@
     </div>
     <div class="formInputText center">
         <label for="sharedwith">Podaj loginy osób oddzielone spacjami:<br></label>
-        <textarea rows="3" cols="100" placeholder="Komu udostępnić?" name="sharedwith" id="sharedwith"
-                  th:field="*{sharedLogins}"></textarea>
+        <input type="text" placeholder="Komu udostępnić?" name="sharedwith" id="sharedwith" th:field="*{sharedLogins}">
     </div>
     <div class="center">
         <button type="submit" id="submitForm" class="btn">Zapisz notatkę</button>

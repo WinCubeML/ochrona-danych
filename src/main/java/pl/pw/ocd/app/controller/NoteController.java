@@ -133,9 +133,9 @@ public class NoteController {
                 case 2:
                     note.setPublic(false);
                     note.setPrivate(false);
-                    List<String> permitted = getSharedLogins(noteDTO.getSharedLogins());
+                    List<String> permitted = getSharedLogins(user.getValue(), noteDTO.getSharedLogins());
                     if (!permitted.isEmpty())
-                        note.setPermitted(getSharedLogins(noteDTO.getSharedLogins()));
+                        note.setPermitted(permitted);
                     else {
                         note.setPermitted(new ArrayList<>());
                         note.setPrivate(true);
@@ -161,11 +161,11 @@ public class NoteController {
         }
     }
 
-    private List<String> getSharedLogins(String data) {
+    private List<String> getSharedLogins(String issuer, String data) {
         List<String> result = new ArrayList<>();
         String[] listData = data.split(" ");
         for (String s : listData) {
-            if (s.matches("^[a-zA-Z0-9]+$") && userService.existsByLogin(s)) {
+            if (s.matches("^[a-zA-Z0-9]+$") && userService.existsByLogin(s) && !issuer.equals(s)) {
                 result.add(s);
             }
         }
